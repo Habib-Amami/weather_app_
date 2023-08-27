@@ -17,7 +17,6 @@ class CurrentWeatherApi {
     );
 
     if (response.statusCode == 200) {
-      print(jsonDecode(response.body));
       return CurrentWeatherModel.fromJson(jsonDecode(response.body));
     } else {
       throw Exception("couldn't load data");
