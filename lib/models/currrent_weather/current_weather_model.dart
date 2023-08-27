@@ -1,3 +1,10 @@
+import 'package:weather_app/models/currrent_weather/sys.dart';
+import 'package:weather_app/models/currrent_weather/weather.dart';
+import 'package:weather_app/models/currrent_weather/wind.dart';
+
+import 'coord.dart';
+import 'main.dart';
+
 class CurrentWeatherModel {
   Coord coord;
   List<Weather> weather;
@@ -53,117 +60,5 @@ class CurrentWeatherModel {
         "id": id,
         "name": name,
         "cod": cod,
-      };
-}
-
-class Coord {
-  double lon;
-  double lat;
-
-  Coord({
-    required this.lon,
-    required this.lat,
-  });
-
-  factory Coord.fromJson(Map<String, dynamic> json) => Coord(
-        lon: json["lon"]?.toDouble(),
-        lat: json["lat"]?.toDouble(),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "lon": lon,
-        "lat": lat,
-      };
-}
-
-class Main {
-  double temp;
-  double feelsLike;
-  double tempMin;
-  double tempMax;
-  int pressure;
-  int humidity;
-
-  Main({
-    required this.temp,
-    required this.feelsLike,
-    required this.tempMin,
-    required this.tempMax,
-    required this.pressure,
-    required this.humidity,
-  });
-
-  factory Main.fromJson(Map<String, dynamic> json) => Main(
-        temp: json["temp"]?.toDouble(),
-        feelsLike: json["feels_like"]?.toDouble(),
-        tempMin: json["temp_min"]?.toDouble(),
-        tempMax: json["temp_max"]?.toDouble(),
-        pressure: json["pressure"],
-        humidity: json["humidity"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "temp": temp,
-        "feels_like": feelsLike,
-        "temp_min": tempMin,
-        "temp_max": tempMax,
-        "pressure": pressure,
-        "humidity": humidity,
-      };
-}
-
-class Sys {
-  int sunrise;
-  int sunset;
-
-  Sys({
-    required this.sunrise,
-    required this.sunset,
-  });
-
-  factory Sys.fromJson(Map<String, dynamic> json) => Sys(
-        sunrise: json["sunrise"],
-        sunset: json["sunset"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "sunrise": sunrise,
-        "sunset": sunset,
-      };
-}
-
-class Weather {
-  String description;
-  String icon;
-
-  Weather({
-    required this.description,
-    required this.icon,
-  });
-
-  factory Weather.fromJson(Map<String, dynamic> json) => Weather(
-        description: json["description"],
-        icon: json["icon"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "description": description,
-        "icon": icon,
-      };
-}
-
-class Wind {
-  double speed;
-
-  Wind({
-    required this.speed,
-  });
-
-  factory Wind.fromJson(Map<String, dynamic> json) => Wind(
-        speed: json["speed"]?.toDouble(),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "speed": speed,
       };
 }
