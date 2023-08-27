@@ -1,9 +1,8 @@
+import 'package:weather_app/models/currrent_weather/coord.dart';
+import 'package:weather_app/models/currrent_weather/main.dart';
 import 'package:weather_app/models/currrent_weather/sys.dart';
 import 'package:weather_app/models/currrent_weather/weather.dart';
 import 'package:weather_app/models/currrent_weather/wind.dart';
-
-import 'coord.dart';
-import 'main.dart';
 
 class CurrentWeatherModel {
   Coord coord;
