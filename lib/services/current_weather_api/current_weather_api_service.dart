@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 import 'package:weather_app/models/currrent_weather/current_weather_model.dart';
 
 class CurrentWeatherApi {
-  // "https://api.openweathermap.org/data/2.5/weather?q=tunis&appid=7d054d3b620169ba3c12a1f728b57a19"
   final String city;
   CurrentWeatherApi({this.city = "tunis"});
 
