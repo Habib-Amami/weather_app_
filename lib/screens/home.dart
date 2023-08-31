@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:unixtime/unixtime.dart';
 import 'package:weather_app/models/currrent_weather/current_weather_model.dart';
 import 'package:weather_app/services/current_weather_api/current_weather_api_service.dart';
+import 'package:weather_app/widgets/main_card.dart';
+import 'package:weather_app/widgets/sun_card.dart';
+import 'package:weather_app/widgets/wind_cart.dart';
 
 import '../constants/images.dart';
 
@@ -85,361 +86,31 @@ class _HomeState extends State<Home> {
                           height: 10,
                         ),
                         //-- main card (city, temp, main weather, ....)
-                        Card(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20)),
-                          shadowColor: Colors.white70,
-                          elevation: 8,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(20),
-                                    child:
-                                        // -- this text represents the country name
-                                        Text(
-                                      snapshot.data!.name.toUpperCase(),
-                                      style: const TextStyle(
-                                        fontFamily: "Montserrat",
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 26,
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                      bottom: 20,
-                                      left: 20,
-                                      right: 20,
-                                    ),
-                                    child:
-                                        // -- this text represents the current date
-                                        Text(
-                                      DateFormat.yMMMMd('en_US').format(
-                                        DateTime.now(),
-                                      ),
-                                      style: const TextStyle(
-                                        fontFamily: "BarlowCondensed",
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  Row(
-                                    children: [
-                                      Column(
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.all(10),
-                                            child:
-                                                // -- this text represents the current main weather
-                                                Text(
-                                              snapshot
-                                                  .data!.weather[0].description,
-                                              style: const TextStyle(
-                                                fontFamily: "Montserrat",
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 16,
-                                              ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                              left: 10,
-                                              right: 10,
-                                            ),
-                                            child:
-                                                //-- this text represents the curren temp
-                                                Text(
-                                              "${((snapshot.data!.main.temp) - 273.15).toStringAsFixed(1)} C\u00B0",
-                                              style: const TextStyle(
-                                                fontFamily: "BarlowCondensed",
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 26,
-                                              ),
-                                              textAlign: TextAlign.center,
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                              top: 10,
-                                              bottom: 20,
-                                              left: 10,
-                                              right: 10,
-                                            ),
-                                            child: Text(
-                                              "min :${((snapshot.data!.main.tempMin) - 273.15).toStringAsFixed(1)} / max :${((snapshot.data!.main.tempMax) - 273.15).toStringAsFixed(1)}",
-                                              style: const TextStyle(
-                                                fontFamily: "Montserrat",
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 12,
-                                              ),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                      const SizedBox(
-                                        width: 30,
-                                      ),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(bottom: 20),
-                                        child: Image.network(
-                                          'http://openweathermap.org/img/w/${snapshot.data!.weather[0].icon}.png',
-                                          scale: 0.5,
-                                          alignment:
-                                              AlignmentDirectional.topCenter,
-                                        ),
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ],
-                          ),
+                        MainCard(
+                          countryName: snapshot.data!.name.toUpperCase(),
+                          weatherDescription:
+                              snapshot.data!.weather[0].description,
+                          temp: snapshot.data!.main.temp,
+                          tempMin: snapshot.data!.main.tempMin,
+                          tempMax: snapshot.data!.main.tempMax,
+                          icon: snapshot.data!.weather[0].icon,
                         ),
                         const SizedBox(
                           height: 10,
                         ),
-                        Card(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20)),
-                          shadowColor: Colors.white70,
-                          elevation: 8,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Padding(
-                                padding: EdgeInsets.only(
-                                  top: 20,
-                                  bottom: 20,
-                                  left: 20,
-                                  right: 20,
-                                ),
-                                child: Text(
-                                  "Wind and Humidity",
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                    fontFamily: "Montserrat",
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  bottom: 20,
-                                  left: 20,
-                                  right: 20,
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    const Row(
-                                      children: [
-                                        Icon(Icons.air),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Text(
-                                          "Wind speed",
-                                          style: TextStyle(
-                                            fontFamily: "BarlowCondensed",
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 18,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Text("${snapshot.data!.wind.speed}  m/s"),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  bottom: 20,
-                                  left: 20,
-                                  right: 20,
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    const Row(
-                                      children: [
-                                        Icon(Icons.water_drop),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Text(
-                                          "Humidity",
-                                          style: TextStyle(
-                                            fontFamily: "BarlowCondensed",
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 18,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Text("${snapshot.data!.main.humidity} %"),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  bottom: 20,
-                                  left: 20,
-                                  right: 20,
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    const Row(
-                                      children: [
-                                        Icon(Icons.cloud),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Text(
-                                          "Air pressure",
-                                          style: TextStyle(
-                                            fontFamily: "BarlowCondensed",
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 18,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Text("${snapshot.data!.main.pressure} hPa"),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  bottom: 20,
-                                  left: 20,
-                                  right: 20,
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    const Row(
-                                      children: [
-                                        Icon(Icons.visibility),
-                                        SizedBox(
-                                          width: 10,
-                                        ),
-                                        Text(
-                                          "visibility",
-                                          style: TextStyle(
-                                            fontFamily: "BarlowCondensed",
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 18,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    Text(
-                                        "${(snapshot.data!.visibility) / 1000} Km"),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
+                        WindCard(
+                          windSpeed: snapshot.data!.wind.speed,
+                          humidity: snapshot.data!.main.humidity,
+                          pressure: snapshot.data!.main.pressure,
+                          visibility: snapshot.data!.visibility,
                         ),
                         const SizedBox(
                           height: 10,
                         ),
-                        Card(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20)),
-                          shadowColor: Colors.white70,
-                          elevation: 8,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Padding(
-                                padding: EdgeInsets.all(20),
-                                child: Text(
-                                  "Sunset and Sunrise",
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                    fontFamily: "Montserrat",
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  bottom: 20,
-                                  left: 20,
-                                  right: 20,
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Column(
-                                      children: [
-                                        const Text(
-                                          "Sunrise",
-                                          style: TextStyle(
-                                            fontFamily: "BarlowCondensed",
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 18,
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-                                        Text(
-                                            "${snapshot.data!.sys.sunrise.toUnixTime().toString().substring(11, 16)} AM"),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      width: 20,
-                                    ),
-                                    Image.asset(
-                                      Images.sunImage,
-                                      width: 150,
-                                    ),
-                                    const SizedBox(
-                                      width: 20,
-                                    ),
-                                    Column(
-                                      children: [
-                                        const Text(
-                                          "Sunrise",
-                                          style: TextStyle(
-                                            fontFamily: "BarlowCondensed",
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 18,
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-                                        Text(
-                                            "${snapshot.data!.sys.sunset.toUnixTime().toString().substring(11, 16)} PM"),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
+                        SunCard(
+                          sunrise: snapshot.data!.sys.sunrise,
+                          sunset: snapshot.data!.sys.sunset,
+                        ),
                       ],
                     ),
                   )
