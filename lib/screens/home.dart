@@ -98,6 +98,7 @@ class _HomeState extends State<Home> {
                         const SizedBox(
                           height: 10,
                         ),
+                        //-- windcard (wind speed, humidity, visbility , ....)
                         WindCard(
                           windSpeed: snapshot.data!.wind.speed,
                           humidity: snapshot.data!.main.humidity,
@@ -107,6 +108,7 @@ class _HomeState extends State<Home> {
                         const SizedBox(
                           height: 10,
                         ),
+                        //--sucard (sunset and sunrise)
                         SunCard(
                           sunrise: snapshot.data!.sys.sunrise,
                           sunset: snapshot.data!.sys.sunset,
