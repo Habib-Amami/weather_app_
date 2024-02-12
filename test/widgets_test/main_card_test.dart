@@ -5,20 +5,20 @@ import 'package:weather_app/widgets/main_card.dart';
 void main() {
   testWidgets("MainCard displays correct weather data",
       (WidgetTester tester) async {
-    // final responseData = {
-    //   "name": "City Name",
-    //   "weather": [
-    //     {
-    //       "description": "Clear sky",
-    //       "icon": "01d",
-    //     }
-    //   ],
-    //   "main": {
-    //     "temp": 300.0,
-    //     "temp_min": 290.0,
-    //     "temp_max": 310.0,
-    //   },
-    // };
+    final responseData = {
+      "name": "City Name",
+      "weather": [
+        {
+          "description": "Clear sky",
+          "icon": "01d",
+        }
+      ],
+      "main": {
+        "temp": 300.0,
+        "temp_min": 290.0,
+        "temp_max": 310.0,
+      },
+    };
 
     await tester.pumpWidget(
       const MaterialApp(
